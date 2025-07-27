@@ -1,0 +1,44 @@
+public class Pedido {
+
+    private String clienteNombre;
+    private String clienteDireccion;
+    private String clienteTelefono;
+
+    private double monto;
+    private double iva;
+    private double total;
+
+    public void calcularTotales() {
+        iva = monto * 0.12;
+        total = monto + iva;
+    }
+
+    public void generarFactura() {
+        System.out.println("Cliente: " + clienteNombre);
+        System.out.println("Dirección: " + clienteDireccion);
+        System.out.println("Teléfono: " + clienteTelefono);
+        System.out.println("Monto: " + monto);
+        System.out.println("IVA: " + iva);
+        System.out.println("Total: " + total);
+    }
+
+    public void guardarEnBaseDeDatos() {
+        // simulación de guardado
+        System.out.println("Guardando pedido en base de datos...");
+    }
+
+    public void enviarNotificacion(String mensaje) {
+        System.out.println("Notificación al cliente: " + mensaje);
+    }
+
+    public void metodoFuturo() {
+        // Este método servirá cuando integremos pagos electrónicos
+    }
+}
+
+//Malos olores encontrados:
+/* Large Class: La clase tiene múltiples responsabilidades que deberían estar divididas en clases diferentes.
+Primitive Obsession: Los tres clientes son de tipo String, cuando lo correcto sería hacer un objeto para Cliente
+Data Clumps: En el método generarFactura, se usan los mismos atributos en bloque (los tres clientes) deberían formar un solo objeto
+Dead Code: El método "métodoFuturo" es un código muerto ya que no hace tiene utilidad en la clase al ser un código incompleto
+*/
