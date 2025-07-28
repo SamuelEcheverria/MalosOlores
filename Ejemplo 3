@@ -1,0 +1,64 @@
+public interface ServicioNotificacion {
+    void enviar(String mensaje);
+}
+
+public class ServicioEmail implements ServicioNotificacion {
+    public void enviar(String mensaje) {
+        System.out.println("Enviando email: " + mensaje);
+    }
+}
+
+public class ServicioSMS implements ServicioNotificacion {
+    public void notificar(String mensaje) {
+        System.out.println("Enviando SMS: " + mensaje);
+    }
+}
+
+public class Usuario {
+    private String nombre;
+    private String telefono;
+    private String correo;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void mostrarResumen() {
+        System.out.println("Usuario: " + nombre + ", Teléfono: " + telefono + ", Correo: " + correo);
+    }
+}
+
+public class GestorNotificaciones {
+
+    private ServicioNotificacion servicio;
+
+    public GestorNotificaciones(ServicioNotificacion servicio) {
+        this.servicio = servicio;
+    }
+
+    public void notificarUsuario(Usuario usuario, String mensaje) {
+        System.out.println("Notificando a " + usuario.getNombre());
+        System.out.println("Teléfono: " + usuario.getTelefono());
+        System.out.println("Correo: " + usuario.getCorreo());
+        servicio.enviar(mensaje);
+    }
+
+    public String obtenerHoraActual() {
+        // futura funcionalidad
+        return null;
+    }
+}
+
+/*Malos Olores:
+Dead Code: En la clase GestorNotificaciones el método obtenerHoraActual por el momento es un método inútil
+Feature Envy: En la clase GestorNotificaciones , el método notificarUsuario accede más a atributos de otra clase, en este caso debería encargarse la misma clase Usuario de esa parte de la lógica
+Primitive Obsession: se usan tipos de datos primitivos como String en la clase Usuario y la clase GestorNotificaciones opera sobre estos directamente en vez de agruparlos en "Contacto" por ejemplo
+Alternative Classes with Different Interfaces: el método notificar en ServicioSMS difiere del método enviar en su interfaz
