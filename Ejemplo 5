@@ -1,0 +1,78 @@
+public class Cliente {
+
+    private String nombre;
+    private String direccion;
+    private PerfilCliente perfil;
+
+    public Cliente(String nombre, String direccion, PerfilCliente perfil) {
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.perfil = perfil;
+    }
+
+    public String obtenerCategoria() {
+        return perfil.getCategoria();
+    }
+
+    public int obtenerPuntos() {
+        return perfil.getHistorial().getPuntosAcumulados();
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+}
+
+public class PerfilCliente {
+
+    private String categoria;
+    private HistorialCompras historial;
+
+    public PerfilCliente(String categoria, HistorialCompras historial) {
+        this.categoria = categoria;
+        this.historial = historial;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public HistorialCompras getHistorial() {
+        return historial;
+    }
+}
+
+public class HistorialCompras {
+
+    private int puntosAcumulados;
+
+    public HistorialCompras(int puntos) {
+        this.puntosAcumulados = puntos;
+    }
+
+    public int getPuntosAcumulados() {
+        return puntosAcumulados;
+    }
+}
+
+public class ClienteDB {
+
+    public void guardarCliente(Cliente cliente) {
+        // lógica pendiente
+    }
+
+    public void conectar() {
+        // se implementará después
+    }
+}
+
+/*Malos Olores:
+Dead Code: los métodos en la clase ClienteDB son inútiles por el momento
+Lazy Class: la clase ClienteDB se convierte en una clase sin propósito en este momento
+Primitive Obsession: los atributos tipo String como nombre, direccion podrían encapsularse en otra clase tipo NombreCliente
+Message Chains: en el método obtenerPuntos en la clase Cliente hay una cadena de mensajes cliente -> perfil -> historial -> puntos 
+Middle Man: la clase Cliente solo contiene métodos los cuales en su contenido solo tienen llamadas a métodos de otras clases, lo que convierte a Cliente en un intermediario
