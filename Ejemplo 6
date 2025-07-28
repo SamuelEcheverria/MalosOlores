@@ -1,0 +1,77 @@
+public abstract class DocumentoDigital {
+
+    protected String titulo;
+    protected String contenido;
+
+    public DocumentoDigital(String titulo, String contenido) {
+        this.titulo = titulo;
+        this.contenido = contenido;
+    }
+
+    public abstract void mostrar();
+
+    public void cargarDesdeFTP() {
+        // pendiente integración
+    }
+}
+
+public class ReporteMensual extends DocumentoDigital {
+
+    private int totalVentas;
+    private int totalClientes;
+
+    public ReporteMensual(String titulo, String contenido, int ventas, int clientes) {
+        super(titulo, contenido);
+        this.totalVentas = ventas;
+        this.totalClientes = clientes;
+    }
+
+    public void mostrar() {
+        System.out.println("REPORTE: " + titulo);
+        System.out.println("Ventas: " + totalVentas);
+        System.out.println("Clientes: " + totalClientes);
+        System.out.println(contenido);
+    }
+
+    public void guardarEnBD() {
+        System.out.println("Guardando reporte en base de datos...");
+    }
+
+    public void imprimir() {
+        System.out.println("Imprimiendo reporte mensual...");
+    }
+
+    public void generarGrafico() {
+        System.out.println("Generando gráfico de barras...");
+    }
+}
+
+public class CartaDigital extends DocumentoDigital {
+
+    private String destinatario;
+    private String remitente;
+
+    public CartaDigital(String titulo, String contenido, String destinatario, String remitente) {
+        super(titulo, contenido);
+        this.destinatario = destinatario;
+        this.remitente = remitente;
+    }
+
+    public void mostrar() {
+        System.out.println("Carta para: " + destinatario);
+        System.out.println("De: " + remitente);
+        System.out.println(contenido);
+    }
+
+    public void enviarCorreo() {
+        System.out.println("Enviando correo a " + destinatario + "...");
+    }
+}
+
+/*Malos olores:
+Dead Code: El método cargarDesdeFTP en la clase DocumentoDigital está sin implementar , por lo que no tiene utilidad en este momento
+Primitive Obsession: hay atributos String como titulo, contenido que deberían ser un objeto 
+Refused Bequest: el método cargarDesdeFTP en la clase DocumentoDigital debería implementarse en las clases que extienden de ella, cosa que no ocurre, es ignorado completamente
+Shotgun Surgery: En caso de que se quiera modificar la lógica de algún método en las clases ReporteMensual y CartaDigital se tiene que modificar por separado
+Divergent Change: En caso de querer modificar la lógica para guardarEnBD, imprimir, generarGrafico,... se debe modificar siempre esta clase
+Speculative Generality: El método cargarDesdeFTP en la clase DocumentoDigital es un método que fue agregado por si acaso.
