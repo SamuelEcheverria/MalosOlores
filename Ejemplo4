@@ -1,0 +1,39 @@
+public class Pedido {
+
+    private String clienteNombre;
+    private String clienteCorreo;
+    private String clienteTelefono;
+    private double monto;
+
+    public void procesarPago(String tipoPago) {
+        if (tipoPago.equals("tarjeta")) {
+            System.out.println("Procesando pago con tarjeta...");
+        } else if (tipoPago.equals("efectivo")) {
+            System.out.println("Pago en efectivo registrado.");
+        } else {
+            System.out.println("Método de pago no soportado.");
+        }
+    }
+
+    public void imprimirFactura() {
+        System.out.println("Cliente: " + clienteNombre);
+        System.out.println("Correo: " + clienteCorreo);
+        System.out.println("Monto: $" + monto);
+    }
+
+    public void guardarEnBD() {
+        System.out.println("Conectando a BD...");
+        System.out.println("Guardando pedido...");
+    }
+
+    public void metodoIntegracionFutura() {
+        // futuro: integración con sistema ERP
+    }
+}
+
+/*Malos Olores:
+Dead Code: el método "métodoIntegracionFutura" no tiene utilidad en este momento
+Switch Statements: Hay una secuencia de IF-ELSE innecesaria en el método procesarPago
+Large Class: la clase Pedido tiene muchas responsabilidades 
+Primitive Obsession: se usan atributos String y double que podrían encapsularse en un objeto Cliente
+Data Clumps: el bloque de atributos clienteNombre, clienteCorreo y clienteTelefono son un clump de información
