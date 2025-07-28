@@ -1,0 +1,67 @@
+public abstract class Documento {
+
+    protected String contenido;
+
+    public Documento(String contenido) {
+        this.contenido = contenido;
+    }
+
+    public String obtenerContenido() {
+        return contenido;
+    }
+
+    public void imprimir() {
+        System.out.println("Imprimiendo documento genérico...");
+    }
+
+    public void exportarComoPDF() {
+        // se implementará en el futuro si se necesita
+    }
+}
+
+public class Informe extends Documento {
+
+    private String autor;
+    private String resumen;
+
+    public Informe(String contenido, String autor, String resumen) {
+        super(contenido);
+        this.autor = autor;
+        this.resumen = resumen;
+    }
+
+    public void imprimir() {
+        System.out.println("Informe escrito por: " + autor);
+        System.out.println("Resumen: " + resumen);
+        System.out.println("Contenido: " + contenido);
+    }
+
+    public void calcularEstadisticas() {
+        int palabras = contenido.split(" ").length;
+        System.out.println("Este informe tiene " + palabras + " palabras.");
+    }
+}
+
+public class Carta extends Documento {
+
+    private String destinatario;
+    private String remitente;
+
+    public Carta(String contenido, String remitente, String destinatario) {
+        super(contenido);
+        this.remitente = remitente;
+        this.destinatario = destinatario;
+    }
+
+    public void imprimir() {
+        System.out.println("Carta para: " + destinatario);
+        System.out.println("De: " + remitente);
+        System.out.println("Contenido: " + contenido);
+    }
+}
+
+*/Malos olores:
+Primitive Obsession: Atributos como autor, resumen , contenido están como String ; se podrían agrupar como objetos
+Dead Code: En el método exportarComoPDF hay un método inútil
+Speculative Generality: En la clase abstracta documento el método exportarComoPDF no tiene una utlidad futura clara
+Refused Bequest: la implementación del método imprimir se sobreescribe de manera totalmente diferente en las clases donde se hereda
