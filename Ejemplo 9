@@ -1,0 +1,59 @@
+public interface Enviador {
+
+    void enviarMensaje(String destino, String mensaje);
+}
+
+public class EnviadorCorreo implements Enviador {
+
+    public void enviarMensaje(String destino, String mensaje) {
+        System.out.println("Enviando correo a " + destino + ": " + mensaje);
+    }
+
+    public void conectarServidorSMTP() {
+        System.out.println("Conectando a SMTP...");
+    }
+
+    public void validarCorreo(String correo) {
+        System.out.println("Validando dirección: " + correo);
+    }
+}
+
+public class EnviadorSMS implements Enviador {
+
+    public void enviarMensaje(String destino, String mensaje) {
+        System.out.println("Enviando SMS a " + destino + ": " + mensaje);
+    }
+
+    public void validarTelefono(String numero) {
+        System.out.println("Validando número: " + numero);
+    }
+}
+
+public class EnviadorFax implements Enviador {
+
+    public void enviarMensaje(String destino, String mensaje) {
+        // pendiente implementación
+    }
+
+    public void configurarImpresora() {
+        // pendiente
+    }
+}
+
+public class Mensajero {
+
+    public void enviarCorreoRapido(String correo, String texto) {
+        EnviadorCorreo ec = new EnviadorCorreo();
+        ec.validarCorreo(correo);
+        ec.conectarServidorSMTP();
+        ec.enviarMensaje(correo, texto);
+    }
+}
+
+/*Malos olores:
+Dead code: la clase EnviadorFax contiene codigo que no se está usando actualmente
+Lazy Class: la clase EnviadorFax no se está usando 
+Feauture envy: la clase Mensajero depende de los métodos internos de la clase EnviadorCorreo
+Inappropiate Intimacy: la clase Mensajero depende de la clase EnviadorCorreo y llama métodos directamente
+Speculative Generality: los métodos vacíos en EnviadorFax están como implementaciones futuras
+Divergent Change: la clase EnviadorCorreo tiene lógica variada como enviarMensaje, conectarServicio y validadCorreo, por lo que hay múltiples motivos para modificar esta clase
