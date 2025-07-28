@@ -1,0 +1,55 @@
+public class Producto {
+
+    public String nombre;
+    public double precio;
+    public String codigoBarras;
+
+    public Producto(String nombre, double precio, String codigoBarras) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.codigoBarras = codigoBarras;
+    }
+}
+
+public class Factura {
+
+    public Producto producto;
+    public int cantidad;
+
+    public Factura(Producto producto, int cantidad) {
+        this.producto = producto;
+        this.cantidad = cantidad;
+    }
+
+    public double calcularTotal() {
+        return producto.precio * cantidad;
+    }
+
+    public void imprimirResumen() {
+        System.out.println("Producto: " + producto.nombre);
+        System.out.println("Precio unitario: " + producto.precio);
+        System.out.println("Código: " + producto.codigoBarras);
+        System.out.println("Cantidad: " + cantidad);
+        System.out.println("Total: " + calcularTotal());
+    }
+}
+
+public class Impresora {
+
+    public void imprimir(Factura f) {
+        System.out.println("***** FACTURA *****");
+        f.imprimirResumen();
+    }
+
+    public void imprimirProducto(Producto p) {
+        System.out.println("***** PRODUCTO *****");
+        System.out.println(p.nombre + " - " + p.precio);
+    }
+}
+
+/*Malos Olores:
+Data class: la clase Producto solo contiene atributos (datos)
+Feature Envy: en la clase Factura se hace múltiples llamadas a atributos de producto
+Innaproppiate Intimacy: las clases Producto y Factura están muy relacionadas ya que Factura accede a atributos de Producto porque no tiene encapsulamiento
+Data Clumps: Los atributos nombre, precio y codigoBarras se usan juntos por lo que podría componer otra clase 
+Primitive Obsession: hay atributos con tipos de dato String y double que podrian componer una clase NombreProducto por ejemplo
