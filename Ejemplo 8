@@ -1,0 +1,57 @@
+public abstract class ProcesadorArchivo {
+
+    public void procesar(String ruta) {
+        // lógica general
+    }
+
+    public void imprimirResumen() {
+        // para futuras extensiones
+    }
+}
+
+public class ProcesadorCSV extends ProcesadorArchivo {
+
+    public void procesar(String ruta) {
+        System.out.println("Leyendo archivo CSV: " + ruta);
+        // lógica específica
+    }
+
+    public void leerSeparador() {
+        System.out.println("Separador: ;");
+    }
+
+    public void guardarBackup() {
+        System.out.println("Guardando copia del CSV...");
+    }
+}
+
+public class ProcesadorPDF extends ProcesadorArchivo {
+
+    public void procesar(String ruta) {
+        System.out.println("Abriendo archivo PDF: " + ruta);
+    }
+
+    public void generarMiniatura() {
+        System.out.println("Generando preview del PDF...");
+    }
+}
+
+public class ReporteEjecucion {
+
+    public String log;
+
+    public ReporteEjecucion(String log) {
+        this.log = log;
+    }
+
+    public void imprimirReporte() {
+        System.out.println("REPORTE:");
+        System.out.println(log);
+    }
+}
+ /*Malos Olores:
+Divergent Change: la clase procesadorCSV tiene lógica de leerSeparador, guardarBackup y procesar , por lo que si en algún momento se desea cambiar la lógica , múltiples motivos de cambio afectan a una sola clase
+Dead Code: en la clase ProcesadorArchivo el método imprimirResumen no se usa luego
+Speculative Generality: en la clase ProcesadorArchivo el método imprimirResumen se planea usar a futuro 
+Comments: se utilizan comentarios que explican parte del código
+Refuse Bequest: en la clase abstracta el metodo imprimirResumen no se usa en ninguna de las clases que extienden, por lo que rechazan el comportamiento de la clase
