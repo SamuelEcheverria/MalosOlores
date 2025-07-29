@@ -1,0 +1,94 @@
+package group.Model;
+
+import jakarta.mail.*;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
+
+import java.util.List;
+import java.util.Properties;
+
+public class Admin extends Person {
+    private String username;
+    private String password;
+    private List<String> clientes;
+
+    public Admin(String name, String surname, String CI, List<String> clients) {
+        this.name = name;
+        this.surname = surname;
+        this.CI = CI;
+        this.clientes = clients;
+    }
+
+    public void setEmailCredentials(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public Client createClient(String name, String surname, String CI) {
+        return new Client(name, surname, CI);
+    }
+
+    public void saveClient(String name, String surname, String CI) {
+        Client client = new Client(name, surname, CI);
+        String clientStr = client.toString();
+        if (!clientes.contains(clientStr)) {
+            clientes.add(clientStr);
+        }
+    }
+
+    public void sendMessage(String messageContent, Client client) {
+        String to = client.getEmails().get(0);
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        jakarta.mail.Authenticator auth = new jakarta.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        };
+
+        Session session = Session.getInstance(props, auth);
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(to)
+            );
+            message.setSubject("Sin asunto");
+            message.setText(messageContent);
+
+            Transport.send(message);
+            System.out.println("Correo enviado correctamente.");
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Admin createAdmin(String name, String surname, String CI, List<String> clients) {
+        return new Admin(name, surname, CI, clients);
+    }
+
+    public void printClient(String name, String surname, String CI) {
+        Client client = new Client(name, surname, CI);
+        String clientStr = client.toString();
+
+        for (String s : clientes) {
+            if (s.equals(clientStr)) {
+                System.out.println(s);
+            }
+        }
+    }
+
+    public void deleteClient(Client client) {
+        String clientStr = client.toString();
+
+        clientes.removeIf(s -> s.equals(clientStr));
+    }
+}

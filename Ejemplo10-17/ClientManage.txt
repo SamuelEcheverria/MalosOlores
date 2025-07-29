@@ -1,0 +1,14 @@
+package group.Model;
+
+public class ClientManage {
+    Admin admin;
+    public void createClient(String name, String surname, String CI){
+        admin.createClient(name, surname, CI);
+    }
+    public void deleteClient(Client client){
+        admin.deleteClient(client);
+    }
+    public void sendMessage(String message, Client client){
+        admin.sendMessage(message, client);
+    }
+}

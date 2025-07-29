@@ -1,0 +1,89 @@
+package group.Model;
+
+import java.util.LinkedList;
+import java.util.List;
+public class Client extends Person {
+    List<String> phones;
+    List<String> contacts;
+    List<String> images;
+    List<String> emails;
+    public Client(String name, String surname, String ID, String phone, String contact, String image){
+        this.name = name;
+        this.surname=surname;
+        this.CI = ID;
+        this.phones = new LinkedList<>();
+        contacts = new LinkedList<>();
+        images = new LinkedList<>();
+    }
+    public Client(String name, String surname, String ID){
+        this.name = name;
+        this.surname=surname;
+        this.CI = ID;
+        this.phones = new LinkedList<>();
+        contacts = new LinkedList<>();
+        images = new LinkedList<>();
+    }
+    public void addInformation(List<String> contacts, List<String> images, List<String> phones){
+        if(contacts!=null){
+            for(int i=0;i<contacts.size();i++){
+                this.contacts.add(contacts.get(i));
+                System.out.println("contacto anadido");
+            }
+        }
+        if(images!=null){
+            for(int i=0;i<images.size();i++){
+                this.images.add(images.get(i));
+                System.out.println("Imagen anadido");
+            }
+        }
+        if(phones!=null){
+            for(int i=0;i<phones.size();i++){
+                this.phones.add(phones.get(i));
+                System.out.println("Telefono anadido");
+            }
+        }
+    }
+    public Client createCLient(String name, String surname, String CI, List<String> phones, List<String> contacts, List<String> images){
+        return new Client(surname, surname, CI, name, surname, CI);
+    }
+    public boolean isCIAlphanumeric(){
+        for(char c: this.CI.toCharArray()){
+            if(!Character.isLetterOrDigit(c)){
+                return false;
+            }
+        }
+        return true;
+    }
+    public void removeClient(List<Client> clients, Client client){
+        for(int i=0;i<clients.size();i++){
+            if(client==clients.get(i)){
+                clients.remove(i);
+            }
+        }
+    }
+    public List<String> getEmails() {
+        return emails;
+    }
+    public List<String> getContacts() {
+        return contacts;
+    }
+    public void setContacts(List<String> contacts) {
+        this.contacts = contacts;
+    }
+    public List<String> getImages() {
+        return images;
+    }
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+    public List<String> getPhones() {
+        return phones;
+    }
+    public void setPhones(List<String> phones) {
+        this.phones = phones;
+    }
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+}
